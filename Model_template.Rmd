@@ -1,6 +1,6 @@
 ---
-title: "Model_XX_Template"
-author: "Paul Daiber"
+title: "Final Report Decision Analysis"
+author: "Paul Daiber (3235834)"
 date: '2024-07-05'
 output: 
   html_document:
@@ -1061,10 +1061,17 @@ compound_figure(mcSimulation_object = model_mc_simulation,
 
 ## 4.1 Inference of Results
 
-Given the results, and with the set of input values provided with it, the transformation of the family farm into an silvoarable agroforestry system by the young farmer is the preferable option in terms of financial gain.
+Given the results, and with the set of input values utilized, the transformation of the family farm into an silvoarable agroforestry system by the young farmer is the preferable option in terms of financial gain.
  
-## 4.1 Limitations of my work
+## 4.2 Limitations of my work
 
-This model represents a hypothetical scenario developed as part of the Decision Analysis course. Given its specificity, it is uncertain how many farmers will face this exact decision or a similar one in real-world contexts. Additionally, the model was conceptualized, computed, and revised within a limited time frame, which has affected both the overall structure and the depth of the individual variables. The inputs for the variables were not thoroughly researched, leading to potential inaccuracies in the data used. Furthermore the model did not account for various aspects such as several financial considerations, arable interactions during the growing season as well as how the land changes over time depending on the system. 
+This model represents a hypothetical scenario developed as part of the Decision Analysis course. Given its specificity, it is uncertain how many farmers will face this exact decision or a similar one in real-world contexts. Additionally, the model was conceptualized, computed, and revised within a limited time frame, which has affected both the overall structure and the depth of the individual variables. The inputs for the variables were not thoroughly researched, leading to potential inaccuracies in the data used. Furthermore the model did not account for various aspects such as several financial considerations, arable interactions during the growing season as well as how the land changes over time depending on the system. Furthermore the modulation of the conventional system is very simplified and would have benefited of  additional costs and benefits being part of the model, such as various taxes, insurances or the "GAP" subsidies from the European Union. Therefore no farmer should make decision solely based on this decision analysis.
 
-## 3.2 Relevance of my work 
+## 4.3 Relevance of my work 
+
+Let’s be honest: my work here probably won’t have much impact on the real-world decisions faced by agricultural stakeholders. It’s quite unlikely that a farmer will encounter a situation like this or find my model particularly useful. Besides that I would also recommend to not draw any conclusions from this model if you actually have to face this decision. My work here was conducted in order to complete the Decision Analysis course and receive (hopefully) a good grade while you being one of the few people that is actually going to read this.
+However, I think that my work is actually relevant to me.  I’ve learned a lot about Decision Analysis, improved my R programming skills, and even set up my first GitHub repository. I now find Decision Analysis both intriguing and actually useful. Looking ahead, I plan to continue exploring this field—possibly even as a student worker. There’s a chance that in the future, something I work on could actually be relevant to stakeholders in the agricultural sector.
+
+# 5. Acknowledgements 
+
+I would like to thank Cory, Prajna, Dorcas, Jan-Bernd, Farimah, Sanghyo, Johannes and Eike (and everybidy else who were involved with this course) for organizing a great course. 
