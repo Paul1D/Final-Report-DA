@@ -1,0 +1,78 @@
+variable;lower;median;upper;distribution;label;Description
+yield_wheat;3200;NA;12700;posnorm;Yield Wheat(kg/ha);Wheat yield under normal conditions
+yield_soy_bean;1750;NA;3200;posnorm;Yield Soy Bean(kg/ha);Soy Bean yield under normal conditions
+yield_maize;5200;NA;9600;posnorm;Yield Maize (kg/ha);Maize yield under normal conditions
+yield_landsberger_gemenge;6000;NA;9000;posnorm;Yield Landsberger Gemenge (kg/ha);Landsberger Gemenge yield under normal conditions
+var_CV;5;NA;20;posnorm;Coefficient of variation;Coefficient of variation (measure of relative variability)
+max_harvest_apple;80;NA;90;posnorm;Maximum apple tree yield (kg/tree);Yield of an apple tree at maximum harvest phase
+time_to_first_yield_estimate_apple;4;NA;4;const;Time to first yield estimate (years);Time until apple reaches first harvest phase (years)
+first_yield_estimate_percent_apple;8;NA;15;posnorm;First yield estimate in %;Apple yield of first harvest phase in % of maximum yield
+time_to_second_yield_estimate_apple;6;NA;6;const;Time to second yield estimate (years);Time until apple reaches second harvest phase (years)
+second_yield_estimate_percent_apple;40;NA;60;posnorm;Second yield estimate in %;Apple yield of second harvest phase in % of maximum yield
+n_years_apple;40;NA;40;const;Lifespan apple tree (years);Years until apple tree gets removed from system
+max_harvest_plum;80;NA;90;posnorm;Maximum plum tree yield (kg/tree);Yield of a plum tree at maximum harvest phase
+time_to_first_yield_estimate_plum;4;NA;4;const;Time to first yield estimate (years);Time until plum reaches first harvest phase (years)
+first_yield_estimate_percent_plum;8;NA;15;posnorm;First yield estimate in %;Plum yield of first harvest phase in % of maximum yield
+time_to_second_yield_estimate_plum;6;NA;6;const;Time to second yield estimate (years);Time until plum reaches second harvest phase (years)
+second_yield_estimate_percent_plum;40;NA;60;posnorm;Second yield estimate in %;Plum yield of second harvest phase in % of maximum yield
+n_years_plum;40;NA;40;const;Lifespan plum tree (years);Years until plum tree gets removed from system
+operating_years;40;NA;40;const;Timespan until Farmer goes into Pension;Amount of years that simulation is running for/ until farmer goes into pension
+ecological_benefits;3;NA;50;posnorm;Ecological benefits of AF system EUR/ha/per year;Ecological benefits including carbon sequestration, increased biodviersity interpreted in a monetary value
+social_moral_benefits;10;NA;50;posnorm;Social moral benefits of farmer in AF system (EUR/ha/year);Personal social moral benefits that farmer gains by working in AF system instead of conventional system
+subsidies_eco_scheme_tree;200;NA;200;const;Subsidies eco scheme trees (EUR/ha of trees/ year);Subsidies of the eco scheme tree that farmer receives
+hectares_perennials;1.76;NA;1.76;const;Avaiable area annuals (ha);Cropping Area that is cultivated by fruit trees
+trees_per_ha;1000;NA;1000;const;Amount of trees per ha;One tree requires 10m², therefore amount of trees per ha is 1000
+hectares_annuals;13.24;NA;13.24;const;Available area perennials (ha);Cropping Area that is cultivated by annuals
+apple_tree;20;NA;35;posnorm;Cost apple tree (EUR/tree);Investment for a young apple tree  (EUR/tree)
+plum_tree;20;NA;35;posnorm;Cost plum tree (EUR/tree);Investment for a young plum tree (EUR/tree)
+new_infrastructure_cost;5000;NA;8000;posnorm;New infrastructure cost (EUR/ha);New infrastructure that is required for an AF system such as hedges, fences, irrigation system, etc. (EUR/ha)
+irrigation_cost;0.01;NA;0.31;posnorm;Irrigation cost (EUR/l);Irrigation cost for young trees (EUR/L)
+irrigation_amount;30;NA;60;posnorm;Irrigation amount  (l/tree/year);Liters of water that young trees require per year (l/tree/year)
+new_machinery_rental_cost;50;NA;100;posnorm;Rental cost for new harvesting machinery (Eur/ha);Rental cost for new machinery that is required for AF system (EUR/ha)
+machinery_maintenance_cost;50;NA;100;posnorm;Machinery maintenance cost (EUR);Machinery caintenance cost (EUR)
+fuel_cost;150;NA;250;posnorm;Fuel cost (EUR/ha);Fuel cost of machinery (EUR)
+labour_cost;12;NA;25;posnorm;Labour cost (EUR/hour);Labour cost including weeding, harvesting, etc. (EUR/hour)
+labour_hours;20;NA;50;posnorm;Labour hours (hour/ha);Labour hours including weeding, harvesting, pruning, etc. (hour/ha)
+distribution_cost;100;NA;200;posnorm;Cost for process of distribution (Eur/ha);Cost for distribution, including contact with retailers, finding new market and marketing costs
+seed_cost_wheat;125;NA;200;posnorm;Seed cost wheat (EUR/ha);Seed cost wheat (EUR/ha)
+seed_cost_soy_bean;105;NA;175;posnorm;Seed cost soy bean (EUR/ha);Seed cost soy bean (EUR/ha)
+seed_cost_maize;45;NA;75;posnorm;Seed cost maize (EUR/ha);Seed cost maize (EUR/ha)
+seed_cost_langsberger_gemenge;16;NA;24;posnorm;Seed cost landsberger gemenge (EUR/ha);Seed cost lansberger gemenge (EUR/ha)
+crop_protection_cost;200;;500;posnorm;Crop protection cost (Eur/ha);Action that farmer has to take for crop protection like beneficials or organic pesticides
+fertilizer_cost;100;NA;200;posnorm;Fertilizer cost (EUR/ha);Fertilizer cost for wheat (EUR/ha)
+price_wheat;0.45;NA;0.55;posnorm;Market price wheat (EUR/kg);Market price wheat (EUR/kg)
+price_soy_bean;0.8;NA;1.2;posnorm;Market price soy bean (EUR/kg);Market price soy bean (EUR/kg)
+price_landsberger_gemenge;0.01;NA;0.02;posnorm;Market price landsberger gemenge (EUR/kg);Market price landsberger gemenge (EUR/kg)
+price_maize;0.3;NA;0.5;posnorm;Market price maize (EUR/kg);Market price maize (EUR/kg)
+price_apple;0.1;NA;0.3;posnorm;Market price apples (EUR/kg);Market price apples (EUR/kg)
+price_plum;0.2;NA;0.3;posnorm;Market price plums (EUR/kg);Market price plums (EUR/kg)
+p_market_price_risk;0.01;NA;0.1;tnorm_0_1;% chance market and price risks;Probability of market and price risks
+p_production_risk;0.01;NA;0.2;tnorm_0_1;% chance production risks;Probability of production risks, including pathogens, droughts, flooding events, etc.
+p_institutional_policy_risk;0.01;NA;0.2;tnorm_0_1;% chance institutional and policy risks;Probability of institutional and policy risks including reulatory changes, trade policies, etc.
+p_personal_risk;0.01;NA;0.1;tnorm_0_1;% chance personal risk;Probability of personal risk, including death, sickness, community conflicts, etc.
+p_change_market_risk;0.3;NA;0.5;tnorm_0_1;% change if market risk event occurs;The percentage change of the affected variable if a market risk event occurs
+p_change_production_risk_AF;0.7;NA;0.8;tnorm_0_1;% change if production risk event occurs (AF System);The percentage change of the affected variable if a production risk event occurs in AF system
+p_change_production_risk_baseline;0.5;NA;0.9;tnorm_0_1;% change if production risk event occurs (baseline);The percentage change of the affected variable if a production risk event occurs in conventional system
+p_change_institutional_risk_AF;0.4;NA;0.6;tnorm_0_1;% change if institutional/policy risk event occurs(AF);The percentage change of the affected variable if a institutional and policy risk event occurs in AF system
+p_change_institutional_risk_baseline;1;NA;1;const;% change if institutional/policy risk event occurs(baseline);The percentage change of the affected variable if a institutional and policy risk event occurs in convetional system
+p_change_personal_risk;1.5;NA;2.5;posnorm;% change if personal risk event occurs;The percentage change of the affected variable if a personal risk event occurs
+yield_wheat_baseline;6000;NA;10000;posnorm;Convetional system wheat yield (kg/ha);Wheat yield under normal conditions in conventianal system (baseline comparisson)
+yield_sugar_beet_baseline;50000;NA;80000;posnorm;Convetional system sugar beet yield (kg/ha);Sugar beet yield under normal conditions in conventianal system (baseline comparisson)
+yield_rape_seed_baseline;3000;NA;5000;posnorm;Convetional system rape seed yield (kg/ha);Rape seed yield under normal conditions in conventianal system (baseline comparisson)
+seed_cost_wheat_baseline;100;NA;160;posnorm;Conventional system seed cost wheat (EUR/ha);Conventional system seed cost wheat (EUR/ha) for baseline comparisson
+seed_cost_sugar_beet_baseline;300;NA;600;posnorm;Conventional system seed cost sugar beet(EUR/ha);Conventional system seed cost sugar beet (EUR/ha) for baseline comparisson
+seed_cost_rape_seed_baseline;70;NA;150;posnorm;Conventional system seed cost rape seed (EUR/ha);Conventional system seed cost rape seed (EUR/ha) for baseline comparisson
+price_wheat_baseline;0.2;NA;0.25;posnorm;Market price wheat (EUR/kg) (conventional system);Market price wheat (EUR/kg)
+price_sugar_beet_baseline;0.04;NA;0.06;posnorm;Market price sugar beet (EUR/kg) (conventional system);Market price sugar beet (EUR/kg)
+price_rape_seed_baseline;0.4;NA;0.5;posnorm;Market price rape seed (EUR/kg) (conventional system);Market price rape seed (EUR/kg)
+fuel_cost_baseline;100;NA;150;posnorm;Conventional system fuel cost (EUR/ha/year);Conventional system fuel cost of machinery (EUR/ha/year) for baseline comparisson
+fertilizer_cost_baseline;200;NA;300;posnorm;Conventional system fertilizer cost (EUR/ha/year);Conventional system fertilizer cost for wheat (EUR/ha/year) for baseline comparisson
+crop_protection_cost_baseline;100;NA;200;posnorm;Conventional system crop protection cost (EUR/ha/year);Cost for corp protection including insecticides, herbicides, etc. (EUR/ha/year)
+machinery_maintenance_baseline;1000;NA;3000;posnorm;Machinery maintenance cost (EUR) (conventional system);Yearly machinery cost for conventional system
+labour_cost_baseline;12;NA;25;posnorm;Labour cost (EUR/hour) (conventional system);Labour cost including weeding, harvesting, etc. (EUR/hour)
+labour_hours_baseline;10;NA;30;posnorm;Labour hours (hour/ha) (conventional system);Labour hours including weeding, harvesting, pruning, etc. (hour/ha)
+leasing_cost_baseline;500;NA;600;posnorm;Leasing cost (EUR/ha/year);Leasing cost for the extra land of 25 ha that is required to make the system economically feasible (EUR/ha/year)
+leased_hectares_baseline;25;NA;25;const;Leased land (ha);Extra land that is leased by the farmer
+owned_hectares_baseline;15;NA;15;const;Owned land (ha);Land that is owned by the farmer (ha)
+total_hectares_baseline;40;NA;40;const;Owned + leased land (ha);Total land that is available to the farmer (ha)
+discount_rate;2;;6;posnorm;Discount rate;Discount rate

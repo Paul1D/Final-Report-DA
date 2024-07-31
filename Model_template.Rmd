@@ -1,0 +1,1070 @@
+---
+title: "Model_XX_Template"
+author: "Paul Daiber"
+date: '2024-07-05'
+output: 
+  html_document:
+    toc: true
+    theme: united
+bibliography: keys.bib
+link-citations: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(decisionSupport)
+library(ggplot2)
+library(dplyr)
+library(openxlsx)
+library(kableExtra)
+```
+# 1. Decision model for Agroforestry vs Conventional System
+
+Decision analysis (DA) is a systematic, quantitative and visual approach to support making informed and structured decisions in the face of risk and uncertainty [@Hubbard.2014; @Howard.2014]. In an agricultural context the approach can be utilized to give recommendations regarding agricultural practices, policies and investments. It integrates various analytical techniques to evaluate the potential outcomes of different choices, helping farmers, policymakers, and stakeholders optimize their decisions based on economic, environmental, and social criteria. DA embraces complexity, offers recommendations that account for the limitations of current knowledge, and identifies key uncertainties for future decision-support research [@Lanzanova.2019]. This approach is particularly valuable in scenarios where data is limited. 
+
+The decision was modeled and evaluated with the package decisionSupport [@Luedeling.2024] in the R programming environment [@RDevelopmentCoreTeam.2021]. The decisionSupport package was utilized for a Monte Carlo-based simulation to analyze and evaluate the potential transformation of a conventional farming system into an agroforestry system.
+
+## 1.1 Model Idea 
+
+For this course, I needed to identify a decision that could be analyzed using the DA approach. Given my strong interest in agroforestry (AF) and the socio-ecological transformation of the agricultural sector, I chose to analyze the economic feasibility of converting a conventional farming system into a silvoarable agroforestry system. A silvoarable agroforestry system is a sustainable agricultural practice that integrates trees and arable crops on the same land. This system combines the benefits of forestry and agriculture, aiming to enhance biodiversity, improve soil health, and increase overall productivity [@Palma.2007]. Such sustainable systems offer hope for greater resilience to potential production challenges, such as extreme weather events, flooding, and droughts, which are expected to intensify due to climate change.
+
+In my model, the decision-maker is a dedicated 25-year-old farmer who is passionately committed to making the agricultural sector more sustainable and environmentally friendly. His parents currently operate a conventionally managed farm located in the Rhineland, between Bonn and Cologne. They own 15 hectares (ha) of land and lease an additional 25 ha to ensure economic viability. On this total of 40 ha, they cultivate the "Rheinische Fruchtfolge," a crop rotation system involving wheat, rape seed, and sugar beet. Since the parents are now in their 70s and approaching their well-deserved retirement, the young farmer is set to inherit the family farm. This presents the young farmer with an important decision about the future management of the farm, in particular how it should be managed over the next 40 years until his own retirement.
+
+After extensive research planning, the farmer has developed an alternative to the current conventional farming method. The plan is to transform the 15 ha owned by the family into an AF system. Since AF is more economically viable on a smaller scale, due to higher profit per area, leasing the additional land will no longer be necessary. In the AF system 13.24 ha of the 15 ha will be cultivated with annual crops in a crop rotation of wheat, soybeans, maize, and Landsberger Gemenge (a German seed mixture of legumes and grasses). The remaining 2.76 ha will be planted with fruit trees, with half the area planted with apple trees and the other half with plum trees. This diversified approach aims to enhance sustainability, improve soil health, and increase overall profitability. However the transformation into the AF system requires initial investment cost and additional costs throughout the operation. All detailed information can be found in the input table.
+
+
+## 1.2 Conceptual model 
+The diagram illustrates my conceptual model designed to aid in the decision analysis of the model idea described in the previous section. This model comprehensively integrates the different benefits, costs, and risks associated with such a system over a 40-year timescale to compute the Net Present Value (NPV). Components and Relationships are described in detail below.
+
+
+#### 1.2.1 Operating Benefits (Reoccurring)
+These are the benefits which are illustrated in green that the agroforestry system yields on a reocurring basis. All benefits collectively contribute to the Total Benefits of the system. The benefits consist of: 
+
+- *Yields of Annuals*: Benefits derived from the production of annual crops.
+- *Yield of Fruit Tree*s: Benefits from apple and plum tree production.
+- *Income Diversification*: Financial benefits from having multiple income sources.
+- *Subsidies*: Subsidies of the "eco scheme tree" - program that farmer receives.
+- *Ecological Benefits*: Environmental advantages such as improved biodiversity and soil health.
+- *Social Moral Benefits*: Benefit that farmer gains by having an improved mental health by working in an AF system instead of a conventional system.
+
+#### 1.2.2 Risks 
+The model identifies and categorizes risks, represented by the peach-colored boxes, which can impact the entire system. Both benefits and costs are influenced by these risks. An arrow outgoing from a risk that touches an individual box affects only that specific box. If an arrow touches the frame around a group of boxes, it influences all the boxes within that frame. The risks are grouped into four categories:
+
+- *Production Risks*: These include uncertainties related to the yields of annual and perennial crops, such as droughts or extreme weather events.
+- *Market & Price Risks*: These encompass fluctuations in market conditions and prices for produce and inputs.
+- *Institutional & Policy Risks*: Risks associated with changes in policies and regulations that can affect subsidies and operational regulations.
+- *Personal Risks*: These include individual challenges such as health issues or family conflicts.
+
+#### 1.2.3 Costs
+
+Establishment Cost: One-time costs due at the beginning of the project to set up the system, which includes:
+
+- *Apple Trees and Plum Trees*: Investment in tree planting.
+- *New Infrastructure*: Costs for setting up necessary infrastructure, such as hedges, logistics or an irrigation system. 
+- *Irrigation*: The actual cost of the water which used for the young trees within the first 3 years after planting. 
+
+Operating Cost (Reoccurring): Ongoing costs required to maintain the system, including:
+
+- *Machinery Rental and Maintenance*: Costs for renting and maintaining agricultural machinery, which is required for an AF system. 
+- *Fuel, Seeds & Fertilizer*: Regular expenses for inputs needed for crop production.
+- *Labor and Distribution*: Costs related to workforce and distribution of produce.
+
+-->  Total Costs: All costs that occur within the system summed up. 
+
+#### 1.2.4 NPV & Discount Rate
+
+- *NPV*: critical financial metric that combines total benefits and total costs, adjusted by a Discount Rate to reflect the time value of money over the project's 40-year duration. This provides a single monetary value representing the system's profitability.
+
+- *Discount Rate*: The discount rate is a financial concept used in the valuation of future cash flows. It is the interest rate used to discount future cash flows to their present value.
+
+![](images/conceptual_model.png) 
+*Figure Description: Conceptual model created with PowerPoint. The boxes are color-coded to represent benefits, risks, or costs. Arrows of different colors indicate whether the influence is positive, negative, or affecting. If an arrow touches an individual box, it influences only that box. If it touches the frame around the boxes, it influences all the boxes within that frame. For detailed color descriptions, refer to the legend. * 
+
+This conceptual model serves as a comprehensive framework for decision-making in the context of a silvoarable agroforestry system. By integrating various factors such as reocurring benefits, establishment and operating costs, and diverse risks, the model provides a structured approach to assess the financial viability and sustainability of the system through the NPV metric. This holistic perspective was invaluable to me during the computation of the mathematical model. Moreover, it can assist stakeholders in making informed decisions regarding the implementation and management of silvoarable agroforestry practices.
+
+## 1.3 Input Table 
+
+The input table describes the variables used in the model, including their distributions characterized by a 90% confidence interval and the shape of the distribution. The variables are organized under individual headers for enhanced clarity and better overview. The values for the respective variables were sourced from  [Statisa](https://de.statista.com/), [Landwirtschaftskammer](https://www.landwirtschaftskammer.de/), and insights provided by a helpful colleague from the DA course [Prajna](https://www.gartenbauwissenschaft.uni-bonn.de/author/prajna-kasargodu-anebagilu/). Additionally, due to time constraints, some variables were obtained through prior interactions with [ChatGPT](https://chatgpt.com/), using prompts such as „Dear ChatGPT, can you please check data from the Chamber of Agriculture and other reliable sources to find out the average wheat harvest in kg/ha for organic farms operating in a silvoarable agroforestry system in Germany?ffffff”.
+
+```{r echo=FALSE}
+cost_benefits <- read.csv("input_table_da.csv", header = TRUE, sep = ";", stringsAsFactors = FALSE)
+names(cost_benefits)[1] <- "Description"
+kbl(cost_benefits) %>%
+  kable_paper("striped", full_width = F) %>%
+  pack_rows("General", 1, 3) %>%
+  pack_rows("Yield related Variables AF System", 4, 22) %>%
+  pack_rows("Non Yield related Benefits AF System", 23, 25) %>%
+  pack_rows("Initial Investments Costs AF System", 26, 30) %>%
+  pack_rows("Operating Costs AF System", 31, 42) %>%
+  pack_rows("Market Prices AF System", 43, 48) %>%
+  pack_rows("Risks and Risk Impacts AF & Conventional System", 49, 58) %>%
+  pack_rows("Yield Variables Conventional System", 59, 64) %>%
+  pack_rows("Market Prices Conventional System", 65, 67) %>%
+  pack_rows("Operating Costs Conventional System", 68, 73) %>%
+  pack_rows("Land variables", 74, 77)%>%
+  footnote(general = "Table of estimates for all model variables. The column ‘distribution’ lists the distribution shapes used, including constant (const), 0-1 truncated normal (tnorm_0_1), positive normal (posnorm) and normal (norm) ")
+```
+
+```{r echo=FALSE}
+cost_benefits <- read.csv("input_table.csv", header = TRUE, sep = ";")
+
+make_variables <- function(est,n=1)
+{ x<-random(rho=est, n=n)
+for(i in colnames(x)) assign(i,as.numeric(x[1,i]),envir=.GlobalEnv)
+} 
+
+make_variables(as.estimate(cost_benefits))
+```
+
+# 2. Mathematical Model
+
+To analyze the decision of whether to remain in a conventional system or transition to an AF system, the mathematical model was implemented in R. The variable `n_years` was set to 40, as defined by `operating_years` in the input table described in section 1.3. This 40-year period represents the duration of the simulation, corresponding to the time until the farmer retires. In the following section, the R code is broken down and explained step by step for both the AF and the conventional system.
+
+## 2.1 Agroforestry System 
+
+The code is divided into two sections: the first section calculates the profits and costs for the AF system, while the second section performs similar calculations for the conventional system. Both sections are encapsulated within the `{}` of the `function()` function, which serves to easily compute the simulation over the time span of 40 years. In the following I will describe and elaborate the code for the AF system.
+
+### 2.1.1 Benefits Annuals
+
+This code chunk simulates the annual profits of a crop rotation over 40 years (defined by `operating_years`) for the AF system. Each year, it selects the respective crop based on a 4-year rotation cycle (wheat, soybeans, maize, and Landsberger Gemenge). A loop was used to iterate over each year of the specified `operating_years`. This allows the code to simulate the profit calculation for each year individually, adjusting for production risks and crop rotation. To ensure the correct calculations are applied based on the crop type for that specific year `if` and `else`functions were used. The `vv()` function was used to simulate variability within the yields, the likelihood of production risks, and the yield reduction due to production risk events. The coefficient of variation, represented by `var_CV`, has a lower limit of 5, an upper limit of 20, and follows a positive normal distribution. The same values for `var_CV` are used for every `vv`function in this model. 
+
+For every crop, the yield can be affected by production risks which is computed with the `chance_event()` function. The likelihood of these production risk events increases over the 40-year period, reflecting the growing impact of climate change. The adjusted yield is then multiplied with the market price of the respective crop to calculate the annual profit, which is stored in the `profit_annuals` vector. 
+
+```{r echo=TRUE}
+  # Initialize vector to store profits for each year
+  profit_annuals <- numeric(operating_years)
+  # Generate yields and prices for each year based on crop rotation with adjusted yields due to production risks 
+  # yield (kg/ha) , price (EUR/kg)
+  # Initial risk
+  
+  for (year in 1:operating_years) {
+    cycle_year <- (year - 1) %% 4 + 1
+    # Calculate the cumulative risk for the current year
+    cumulative_risk <- p_production_risk + (year - 1) * 0.005
+    
+    if (cycle_year == 1) {
+      total_yield_wheat <- vv(yield_wheat * hectares_annuals, var_CV, 1)
+      adjusted_wheat_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_wheat * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_wheat,
+        n = 1
+      )
+      price_wheat <- vv(price_wheat, var_CV, 1)
+      profit_annuals[year] <- adjusted_wheat_yield * price_wheat
+    } else if (cycle_year == 2) {
+      total_yield_soy_bean <- vv(yield_soy_bean * hectares_annuals, var_CV, 1)
+      adjusted_soy_bean_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_soy_bean * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_soy_bean,
+        n = 1
+      )
+      price_soy_bean <- vv(price_soy_bean, var_CV, 1)
+      profit_annuals[year] <- adjusted_soy_bean_yield * price_soy_bean
+    } else if (cycle_year == 3) {
+      total_yield_maize <- vv(yield_maize * hectares_annuals, var_CV, 1)
+      adjusted_maize_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_maize * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_maize,
+        n = 1
+      )
+      price_maize <- vv(price_maize, var_CV, 1)
+      profit_annuals[year] <- adjusted_maize_yield * price_maize
+    } else if (cycle_year == 4) {
+      total_yield_landsberger_gemenge <- vv(yield_landsberger_gemenge * hectares_annuals, var_CV, 1)
+      adjusted_landsberger_gemenge_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_landsberger_gemenge * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_landsberger_gemenge,
+        n = 1
+      )
+      price_landsberger_gemenge <- vv(price_landsberger_gemenge, var_CV, 1)
+      profit_annuals[year] <- adjusted_landsberger_gemenge_yield * price_landsberger_gemenge
+    }
+  }
+  
+```
+
+
+### 2.1.2 Benefits Perennials 
+
+Since young apple and plum trees were planted, harvests during the first years were low. Typically, in subsequent years, the yield gradually increases until it reaches a maximum. Therefore, the yield of the fruit trees was modeled as a sigmoidal curve using the `gompertz_yield()` function. The function's parameters are estimated based on yield estimates for two points in time, described by a year number and the percentage of the maximum yield attained at that time.
+
+Yields of fruit trees can also be affected by production risks, which was computed using the `chance_event()` function. Just like annual crops, the likelihood of these production risk events increases over the 40 years due to climate change. The adjusted yield is then multiplied with the market price of the respective crop, and the resulting profit is stored in the `profit_perennials` vector.
+
+```{r echo=TRUE}
+#calculate profits from perennials (kg/tree), one tree cycle goes for 40 years so the as the time span of the simulation
+  yield_apple <- gompertz_yield(max_harvest=max_harvest_apple,
+                                time_to_first_yield_estimate=time_to_first_yield_estimate_apple,
+                                time_to_second_yield_estimate=time_to_second_yield_estimate_apple,
+                                first_yield_estimate_percent= first_yield_estimate_percent_apple,
+                                second_yield_estimate_percent= second_yield_estimate_percent_apple,
+                                n_years = n_years_apple, var_CV = var_CV,
+                                no_yield_before_first_estimate = TRUE)
+  
+  # this function calculates total apple yield by multiplying yield of one tree with total amount of trees)
+  total_yield_apple <- (yield_apple*trees_per_ha*hectares_perennials)
+  #include production risks into apple yield
+  adjusted_apple_yield <- chance_event(chance = vv(var_mean = p_production_risk,
+                                                    var_CV = var_CV,
+                                                    n = operating_years,
+                                                    absolute_trend = 0.005), #Increasing risk of production problems due to climate change
+                                                    value_if = total_yield_apple * vv(p_change_production_risk_AF, var_CV, 1),
+                                                    value_if_not = total_yield_apple,
+                                                    n = operating_years)
+  
+  # Calculate the yield for plums
+  yield_plum <- gompertz_yield(max_harvest=max_harvest_plum,
+                               time_to_first_yield_estimate=time_to_first_yield_estimate_plum,
+                               time_to_second_yield_estimate=time_to_second_yield_estimate_plum,
+                               first_yield_estimate_percent=first_yield_estimate_percent_plum,
+                               second_yield_estimate_percent=second_yield_estimate_percent_plum,
+                               n_years=n_years_plum, var_CV= var_CV,
+                               no_yield_before_first_estimate=TRUE)
+  
+  # this function calculates total apple yield by multiplying yield of one tree with total amount of trees)
+  total_yield_plum <- (yield_plum*trees_per_ha*hectares_perennials)
+  
+  # include production risks into plum yield
+  adjusted_plum_yield <- chance_event(chance =vv(var_mean = p_production_risk,
+                                                 var_CV = var_CV,
+                                                 n = operating_years,
+                                                 absolute_trend = 0.005), #Increasing risk of production problems due to climate change 
+                                                 value_if = total_yield_plum * vv(p_change_production_risk_AF, var_CV, 1),
+                                                 value_if_not = total_yield_plum,
+                                                 n = operating_years)
+  
+  #calculate profits over time span of 40 years 
+  profit_perennials <- (adjusted_apple_yield*price_apple)+(adjusted_plum_yield*price_plum)
+```
+
+
+### 2.1.3 Non Yield related Beneftis 
+
+To account for variability throughout the 40 years of the simulation, non-yield related profits were calculated using the `vv` function. Subsidies were derived from the "Eco-Scheme-Tree" program, which provides €200 per hectare of trees annually. The potential risk of political changes affecting these subsidies was incorporated using the `chance_event()` function. An absolute_trend of 0.004 was applied to simulate the increasing likelihood of political interventions due to  potential future institutional and policy changes. All non yield related benefits were stored in the vector `non_yield_profits`. The ecological benefits, such as increased biodiversity and improved soil structure, were included as part of the benefits from the AF system. Social and moral benefits, representing in increased personal mental health benefits to the farmer due to working in AF system instead of a conventional system, were quantified as the amount of money per hectare per year that reflects the increased happiness of the farmer.
+
+
+```{r echo=TRUE}
+# Define the number of operating years
+operating_years <- 40
+
+# Calculate benefit from subsidies (Eco-Scheme-Tree): €200/ha of trees/year
+subsidies <- rep(subsidies_eco_scheme_tree * hectares_perennials, operating_years)
+
+# Adjust subsidies with the risk of institutional and policy changes
+adjusted_subsidies <- chance_event(
+  chance = vv(
+    var_mean = p_institutional_policy_risk,
+    var_CV = var_CV,
+    n = operating_years,
+    absolute_trend = 0.004
+  ),
+  value_if = subsidies * vv(
+    var_mean = p_change_institutional_risk_AF,
+    var_CV = var_CV,
+    n = operating_years
+  ),
+  value_if_not = subsidies,
+  n = operating_years
+)
+
+# Calculate ecological benefits (e.g., carbon sequestration, increased biodiversity) in EUR/ha/year
+eco_benefits <- vv(
+  var_mean = ecological_benefits * (hectares_annuals + hectares_perennials),
+  var_CV = var_CV,
+  n = operating_years
+)
+
+# Calculate social moral benefits: the monetary value that incentivizes the farmer to choose the AF system over the conventional system in EUR/ha/year
+sm_benefits <- vv(
+  var_mean = social_moral_benefits * (hectares_annuals + hectares_perennials),
+  var_CV = var_CV,
+  n = operating_years
+)
+
+# Calculate total non-yield related profits
+non_yield_profits <- adjusted_subsidies + eco_benefits + sm_benefits
+```
+
+### 2.1.4 Initial Investment Cost 
+
+The initial investment cost includes expenses for new tree stock, infrastructure such as hedges, logistics, and an irrigation system. The irrigation cost is based on the water required for young trees during the summer months for the first 3 years, calculated in EUR per liter. No variability was added to these costs since they occur only in the first year or within the first three years, making them more predictable than costs projected over 40 years. The total investment cost was summarized in the vector `invest_costs_total`. 
+
+```{r echo=TRUE}
+
+# Calculate the cost of apple trees: area of perennials divided by 2, since the area is shared by plum and apple trees
+invest_costs_apple_trees <- c(apple_tree * (trees_per_ha * (hectares_perennials / 2)), rep(0, 39))
+
+# Calculate the cost of plum trees: area of perennials divided by 2
+invest_costs_plum_trees <- c(plum_tree * (trees_per_ha * (hectares_perennials / 2)), rep(0, 39))
+
+# Calculate irrigation costs for the first 3 years
+invest_costs_irrigation <- c(rep(irrigation_cost * irrigation_amount * trees_per_ha * hectares_perennials, 3), rep(0, operating_years - 3))
+
+# Calculate infrastructure costs
+invest_costs_infrastructure <- c(new_infrastructure_cost * (hectares_annuals + hectares_perennials), rep(0, 39))
+
+# Calculate total initial investment costs
+invest_costs_total <- invest_costs_apple_trees + invest_costs_plum_trees + invest_costs_irrigation + invest_costs_infrastructure
+
+```
+
+### 2.1.5 Operating Cost 
+
+The `vv` function was utilized to calculate operating costs and account for potential variability throughout the operating period. Personal risk events, such as sickness or other health issues affecting labor costs, were considered using the `chance_event()` function. The increasing likelihood of health issues due to aging was simulated with an absolute_trend value of 0.003. The total operating cost was compiled in the vector `operating_costs_total` .
+
+```{r echo=TRUE}
+  # Calculate new machinery rental costs in EUR/ha/year
+new_machinery_rental_cost <- vv(
+  var_mean = new_machinery_rental_cost * (hectares_annuals + hectares_perennials),
+  var_CV = var_CV,
+  n = operating_years
+)
+
+# Calculate machinery maintenance costs
+machinery_maintenance_costs <- vv(
+  var_mean = machinery_maintenance_cost,  
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate fuel costs in EUR/ha/year
+fuel_costs <- vv(
+  var_mean = fuel_cost * (hectares_annuals + hectares_perennials),
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate labor costs: (EUR/hour) * (hours/ha) * total ha
+labour_costs <- vv(
+  var_mean = labour_cost * labour_hours * (hectares_annuals + hectares_perennials), 
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Adjust labor costs for personal risk events (e.g., sickness)
+adjusted_labour_costs <- chance_event(
+  chance = vv(var_mean = p_personal_risk, var_CV = var_CV, n = operating_years, absolute_trend = 0.003),
+  value_if = labour_costs * vv(p_change_personal_risk, var_CV, 1),
+  value_if_not = labour_costs,
+  n = operating_years
+)
+
+# Calculate seed costs for wheat in EUR/ha
+seed_costs_wheat <- vv(
+  var_mean = seed_cost_wheat * hectares_annuals,
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate seed costs for soybeans in EUR/ha
+seed_costs_soy_bean <- vv(
+  var_mean = seed_cost_soy_bean * hectares_annuals,
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate seed costs for maize in EUR/ha
+seed_costs_maize <- vv(
+  var_mean = seed_cost_maize * hectares_annuals,
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate seed costs for Landsberger Gemenge in EUR/ha
+seed_costs_landsberger_gemenge <- vv(
+  var_mean = seed_cost_langsberger_gemenge * hectares_annuals,
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate fertilizer costs in EUR/ha
+fertilizer_costs <- vv(
+  var_mean = fertilizer_cost * (hectares_annuals + hectares_perennials),  
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate crop protection costs in EUR/ha
+crop_protection_costs <- vv(
+  var_mean = crop_protection_cost * (hectares_annuals + hectares_perennials),
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate distribution costs in EUR/ha
+distribution_costs <- vv(
+  var_mean = distribution_cost * (hectares_annuals + hectares_perennials),
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+# Calculate total operating costs
+operating_costs_total <- (new_machinery_rental_cost + machinery_maintenance_costs + fuel_costs + adjusted_labour_costs + seed_costs_wheat +
+                         seed_costs_soy_bean + seed_costs_maize + seed_costs_landsberger_gemenge +
+                         fertilizer_costs + crop_protection_costs + distribution_costs)
+```
+
+
+### 2.1.6 Profits Agroforestry System
+
+Total profits of the AF system were calculated by subtracting the total costs from all benefits. The `chance_event()`function was applied at this stage within the model because all variables are subjected to market and price risks. To account for the variability in the likelihood of market and price risks, the `vv` function was utilized. An absolute_trend was included to increase the likelihood of these events in the future due to highly uncertain market conditions. Variability was also incorporated into the actual impact of price and market changes using the `vv` function.  
+
+```{r echo=TRUE}
+  profit_AF_system <- chance_event(
+    chance = vv(
+      var_mean = p_market_price_risk,
+      var_CV = var_CV,
+      n = operating_years,
+      absolute_trend = 0.004 # increasing risk due to highly uncertain development of markets
+    ),
+    value_if = (profit_annuals + profit_perennials + non_yield_profits - invest_costs_total - operating_costs_total) * 
+      vv(
+        var_mean = p_change_market_risk,
+        var_CV = var_CV,
+        n = operating_years
+      ),
+    value_if_not = profit_annuals + profit_perennials + non_yield_profits - invest_costs_total - operating_costs_total,
+    n = operating_years
+  )
+``` 
+
+## 2.2 Conventional System
+
+The computation of the conventional system served as the baseline for comparison. The detailed explanation of this code is provided below.
+
+### 2.2.1 Yield Benefits
+
+The crop rotation in the conventional system follows the "Rheinische Fruchtfolge," consisting of wheat, rapeseed, and sugar beet. The loop is structured similarly to the annual crop rotation in the AF system, as described in section 2.1.1. However, the conventional system experiences a higher impact from production risk events, as indicated by the `p_change_production_risk_baseline`. This means that production risk events, such as droughts, floods, or extreme weather, result in greater yield losses in the conventional system compared to the AF system. The AF system is designed to be more resilient to such adverse events, thereby mitigating the impact of production risks.
+
+```{r echo=TRUE}  
+  # Calculate profits from annuals in the conventional system for baseline comparisson 
+  # Initialize vector to store yields for each year
+  # total_hectares_baseline = owned land + leased land 
+  profits_baseline <- numeric(operating_years)
+  initial_risk <- p_production_risk
+  
+  # Generate yields and prices for each year based on Rheinische crop rotation
+  for (year in 1:operating_years) {
+    cycle_year <- (year - 1) %% 3 + 1
+    # Calculate the cumulative risk for the current year
+    cumulative_risk <- initial_risk + (year - 1) * 0.005
+    
+    if (cycle_year == 1) {
+      total_yield_wheat_baseline <- vv(yield_wheat_baseline * total_hectares_baseline, var_CV, 1)
+      adjusted_wheat_yield_baseline <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_wheat_baseline * vv(p_change_production_risk_baseline, var_CV, 1),
+        value_if_not = total_yield_wheat_baseline,
+        n = 1
+      )
+      price_wheat <- vv(price_wheat_baseline, var_CV, 1)
+      profits_baseline[year] <- adjusted_wheat_yield_baseline * price_wheat
+    } else if (cycle_year == 2) {
+      total_yield_rape_seed_baseline <- vv(yield_rape_seed_baseline * total_hectares_baseline, var_CV, 1)
+      adjusted_yield_rape_seed_baseline <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_rape_seed_baseline * vv(p_change_production_risk_baseline, var_CV, 1),
+        value_if_not = total_yield_rape_seed_baseline,
+        n = 1
+      )
+      price_rape_seed <- vv(price_rape_seed_baseline, var_CV, 1)
+      profits_baseline[year] <- adjusted_yield_rape_seed_baseline * price_rape_seed
+    } else if (cycle_year == 3) {
+      total_yield_sugar_beet_baseline <- vv(yield_sugar_beet_baseline * total_hectares_baseline, var_CV, 1)
+      adjusted_yield_sugar_beet_baseline <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_sugar_beet_baseline * vv(p_change_production_risk_baseline, var_CV, 1),
+        value_if_not = total_yield_sugar_beet_baseline,
+        n = 1
+      )
+      price_sugar_beet <- vv(price_sugar_beet_baseline, var_CV, 1)
+      profits_baseline[year] <- adjusted_yield_sugar_beet_baseline * price_sugar_beet
+    }
+  }
+```
+
+### 2.2.2 Operating cost
+
+Operating costs are calculated using the `vv` function to account for expected variations. Similar to labor costs in the AF system (as discussed in section 2.1.3), these costs are also influenced by personal risks. Additionally, leasing costs are for the extra land, that is required to implement the conventional system. An `absolute_trend` is included in the leasing costs to reflect the rising land prices over time. 
+
+```{r echo=TRUE}
+# Calculate Costs for Conventional System
+
+machinery_maintenance_costs_baseline <- vv(
+  var_mean = machinery_maintenance_baseline, 
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+fuel_costs_baseline <- vv(
+  var_mean = fuel_cost_baseline * total_hectares_baseline, 
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+labour_costs_baseline <- vv(
+  var_mean = labour_cost_baseline * labour_hours_baseline * total_hectares_baseline, # EUR/hour * hours/ha * ha
+  var_CV = var_CV, 
+  n = operating_years
+)
+
+adjusted_labour_costs_baseline <- chance_event(
+  chance = vv(
+    var_mean = p_personal_risk,
+    var_CV = var_CV,
+    n = operating_years,
+    absolute_trend = 0.003 # Increasing risk due to age
+  ),
+  value_if = labour_costs_baseline * vv(p_change_personal_risk, var_CV, 1),
+  value_if_not = labour_costs_baseline,
+  n = operating_years
+)
+
+seed_costs_wheat_baseline <- vv(
+  var_mean = seed_cost_wheat_baseline * total_hectares_baseline,
+  var_CV = var_CV,
+  n = operating_years
+)
+seed_costs_rape_seed_baseline <- vv(
+  var_mean = seed_cost_rape_seed_baseline * total_hectares_baseline,
+  var_CV = var_CV,
+  n = operating_years
+)
+seed_costs_sugar_beet_baseline <- vv(
+  var_mean = seed_cost_sugar_beet_baseline * total_hectares_baseline,
+  var_CV = var_CV,
+  n = operating_years
+)
+
+fertilizer_costs_baseline <- vv(
+  var_mean = fertilizer_cost_baseline * total_hectares_baseline,
+  var_CV = var_CV,
+  n = operating_years
+)
+
+crop_protection_costs_baseline <- vv(
+  var_mean = crop_protection_cost_baseline * total_hectares_baseline,
+  var_CV = var_CV,
+  n = operating_years
+)
+
+leasing_costs_baseline <- vv(
+  var_mean = leasing_cost_baseline * leased_hectares_baseline,
+  var_CV = var_CV,
+  n = operating_years,
+  absolute_trend = 0.002 # Increasing trend over time
+)
+
+costs_baseline <- (machinery_maintenance_costs_baseline + fuel_costs_baseline + adjusted_labour_costs_baseline + seed_costs_wheat_baseline                    + seed_costs_rape_seed_baseline + seed_costs_sugar_beet_baseline + fertilizer_costs_baseline +                                            crop_protection_costs_baseline + leasing_costs_baseline)
+
+``` 
+
+### 2.2.3 Profits Conventional System
+
+In conventional systems, the computation of profits has been carried out using methodologies consistent with those described in section 2.1.6. 
+
+```{r echo=TRUE}
+# Calculate profit incorporating market risks
+profit_baseline_comparisson <- chance_event(
+  chance = vv(var_mean = p_market_price_risk,
+              var_CV = var_CV,                      
+              n = operating_years,                 
+              absolute_trend = 0.004),              # Incremental risk due to market uncertainty
+  value_if = (profits_baseline - costs_baseline) *   # Baseline profit adjusted by market risk
+             vv(var_mean = p_change_market_risk,    
+                var_CV = var_CV,                    
+                n = operating_years),             
+  value_if_not = (profits_baseline - costs_baseline),
+  n = operating_years                           
+)
+
+``` 
+
+## 2.3 Net Profit Value & Cashflow 
+
+To calculate the NPV of the two systems, I used the `discount` function to adjust their net benefits for time preference, calculating the present value of future cashflows. This function automatically calculates NPV (the sum of discounted variables) using the `calculate_NPV()` option. The overall NPV difference between the two systems is found by subtracting the NPV of the conventional system from the NPV of the AF system, this NPV gives information about the overall decision. Cashflows were also analyzed using the `vv` function to consider  variability.
+
+```{r echo=TRUE}
+  NPV_AF_system <- discount(profit_AF_system, discount_rate = discount_rate, calculate_NPV = TRUE)
+  NPV_baseline_comparisson <- discount(profit_baseline_comparisson, discount_rate = discount_rate, calculate_NPV = TRUE)
+  
+  # calculate the overall NPV of the decision (do - don't do)
+  NPV_decision <- NPV_AF_system - NPV_baseline_comparisson
+  
+  # Cashflow
+  AF_cash_flow <- vv(profit_AF_system, n = operating_years, var_CV = var_CV)
+  baseline_cash_flow <-vv(profit_baseline_comparisson, n = operating_years, var_CV = var_CV)
+```
+
+After calculating the NPVs and cashflows, all values were listed. 
+
+```{r echo=TRUE, results='hide'}
+  
+  return(list(NPV_baseline_comparisson =  NPV_baseline_comparisson,
+              NPV_AF_system =  NPV_AF_system, 
+              NPV_decision = NPV_decision,
+              AF_cash_flow = AF_cash_flow,
+              baseline_cash_flow = baseline_cash_flow
+              ))
+```
+# 3. R function (Decision Model)
+
+The complete R function (decision model) for comparing the AF system to the conventional system is provided below. It calculates the Net Present Value (NPV) and cash flow for both systems. The function is named `cost_benefit_functions` and takes as input the values specified in the input table `input_table.csv`.
+
+```{r echo=TRUE}
+cost_benefits <- read.csv("input_table.csv", header = TRUE, sep = ";")
+make_variables <- function(est,n=1)
+{ x<-random(rho=est, n=n)
+for(i in colnames(x)) assign(i,as.numeric(x[1,i]),envir=.GlobalEnv)
+
+} 
+
+make_variables(as.estimate(cost_benefits))
+
+cost_benefits_function <- function(){
+  
+  # Initialize vector to store profits for each year
+  
+  profit_annuals <- numeric(operating_years)
+  
+  # Generate yields and prices for each year based on crop rotation with adjusted yields due to production risks 
+  # yield (kg/ha) , price (EUR/kg)
+  # Initial risk
+  
+  
+  for (year in 1:operating_years) {
+    cycle_year <- (year - 1) %% 4 + 1
+    # Calculate the cumulative risk for the current year
+    cumulative_risk <- p_production_risk + (year - 1) * 0.005
+    
+    if (cycle_year == 1) {
+      total_yield_wheat <- vv(yield_wheat * hectares_annuals, var_CV, 1)
+      adjusted_wheat_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_wheat * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_wheat,
+        n = 1
+      )
+      price_wheat <- vv(price_wheat, var_CV, 1)
+      profit_annuals[year] <- adjusted_wheat_yield * price_wheat
+    } else if (cycle_year == 2) {
+      total_yield_soy_bean <- vv(yield_soy_bean * hectares_annuals, var_CV, 1)
+      adjusted_soy_bean_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_soy_bean * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_soy_bean,
+        n = 1
+      )
+      price_soy_bean <- vv(price_soy_bean, var_CV, 1)
+      profit_annuals[year] <- adjusted_soy_bean_yield * price_soy_bean
+    } else if (cycle_year == 3) {
+      total_yield_maize <- vv(yield_maize * hectares_annuals, var_CV, 1)
+      adjusted_maize_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_maize * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_maize,
+        n = 1
+      )
+      price_maize <- vv(price_maize, var_CV, 1)
+      profit_annuals[year] <- adjusted_maize_yield * price_maize
+    } else if (cycle_year == 4) {
+      total_yield_landsberger_gemenge <- vv(yield_landsberger_gemenge * hectares_annuals, var_CV, 1)
+      adjusted_landsberger_gemenge_yield <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_landsberger_gemenge * vv(p_change_production_risk_AF, var_CV, 1),
+        value_if_not = total_yield_landsberger_gemenge,
+        n = 1
+      )
+      price_landsberger_gemenge <- vv(price_landsberger_gemenge, var_CV, 1)
+      profit_annuals[year] <- adjusted_landsberger_gemenge_yield * price_landsberger_gemenge
+    }
+  }
+  
+  #calculate profits from perennials (kg/tree), one tree cycle goes for 40 years so the as the timespan of the simulation
+  
+  yield_apple <- gompertz_yield(max_harvest=max_harvest_apple,
+                                time_to_first_yield_estimate=time_to_first_yield_estimate_apple,
+                                time_to_second_yield_estimate=time_to_second_yield_estimate_apple,
+                                first_yield_estimate_percent= first_yield_estimate_percent_apple,
+                                second_yield_estimate_percent= second_yield_estimate_percent_apple,
+                                n_years = n_years_apple, var_CV = var_CV,
+                                no_yield_before_first_estimate = TRUE)
+  
+  # this function calculates total apple yield by multiplying yield of one tree with total amount of trees)
+  total_yield_apple <- (yield_apple*trees_per_ha*hectares_perennials)
+  #include production risks into apple yield
+  adjusted_apple_yield <- chance_event(chance = vv(var_mean = p_production_risk,
+                                                    var_CV = var_CV,
+                                                    n = operating_years,
+                                                    absolute_trend = 0.005), #Increasing risk of production problems due to climate change
+                                                     value_if = total_yield_apple * vv(p_change_production_risk_AF, var_CV, 1),
+                                                     value_if_not = total_yield_apple,
+                                                     n = operating_years)
+  
+  # Calculate the yield for plums
+  yield_plum <- gompertz_yield(max_harvest=max_harvest_plum,
+                               time_to_first_yield_estimate=time_to_first_yield_estimate_plum,
+                               time_to_second_yield_estimate=time_to_second_yield_estimate_plum,
+                               first_yield_estimate_percent=first_yield_estimate_percent_plum,
+                               second_yield_estimate_percent=second_yield_estimate_percent_plum,
+                               n_years=n_years_plum, var_CV= var_CV,
+                               no_yield_before_first_estimate=TRUE)
+  
+  # this function calculates total apple yield by multiplying yield of one tree with total amount of trees)
+  total_yield_plum <- (yield_plum*trees_per_ha*hectares_perennials)
+  
+  # include production risks into plum yield
+  adjusted_plum_yield <- chance_event(chance =vv(var_mean = p_production_risk,
+                                                 var_CV = var_CV,
+                                                 n = operating_years,
+                                                 absolute_trend = 0.005), #Increasing risk of production problems due to climate change 
+                                       value_if = total_yield_plum * vv(p_change_production_risk_AF, var_CV, 1),
+                                       value_if_not = total_yield_plum,
+                                       n = operating_years)
+  
+  #calculate profits over time span of 40 years 
+  profit_perennials <- (adjusted_apple_yield*price_apple)+(adjusted_plum_yield*price_plum)
+  
+  # Calculate benefit from subsidies (echo scheme tree): 200€/ ha of trees/ year 
+  subsidies <- numeric(operating_years)
+  subsidies[1:operating_years] <- (subsidies_eco_scheme_tree*hectares_perennials)
+  # Subsidies with the included risk of institutional and policy changes, the risk is increasing over time
+  # due to highly uncertain political landscape 
+  adjusted_subsidies <-  chance_event(chance = vv(var_mean = p_institutional_policy_risk,
+                                                  var_CV = var_CV,
+                                                  n = operating_years,
+                                                  absolute_trend = 0.004),
+                                      value_if = subsidies * vv(var_mean = p_change_institutional_risk_AF,
+                                                                var_CV = var_CV,
+                                                                n = operating_years),
+                                      value_if_not = subsidies,
+                                      n = operating_years)
+  
+  # Calculate ecological benefits(e.g. carbon sequestration, increased bio diversity) EUR/ha/per year 
+  eco_benefits <-vv(var_mean = ecological_benefits*(hectares_annuals+hectares_perennials),
+                   var_CV = var_CV,
+                   n = operating_years)
+
+  # Calculate social moral benefits: the monetary value that incentivizes the farmer to choose the AF system over 
+  # the conventional system in EUR/ha/year
+
+  sm_benefits <-vv(var_mean = social_moral_benefits*(hectares_annuals+hectares_perennials),
+                   var_CV = var_CV,
+                   n = operating_years)
+  
+  non_yield_profits <- (adjusted_subsidies + eco_benefits + sm_benefits)
+  
+  
+  ## Calulate initial investment costs 
+  
+  # calculate how many trees are bought and to which cost, area of perennials is divided by 2, since area is shared by plum and apple trees
+  invest_costs_apple_trees <- c(apple_tree*(trees_per_ha*(hectares_perennials/2)), rep(0, 39)) 
+  invest_costs_plum_trees <- c(plum_tree*(trees_per_ha*(hectares_perennials/2)), rep(0, 39))
+
+  invest_costs_irrigation <- c(rep(irrigation_cost * irrigation_amount * trees_per_ha * hectares_perennials,3),
+                               rep(0, operating_years - 3))
+  
+  invest_costs_infrastructure <- c(new_infrastructure_cost*(hectares_annuals+hectares_perennials), rep(0,39))
+
+    # calulate total initial investments costs
+  invest_costs_total <- invest_costs_apple_trees+invest_costs_plum_trees+invest_costs_irrigation+invest_costs_infrastructure
+  
+  ## Calculate operating cost 
+  
+  new_machinery_rental_cost <- vv(var_mean = new_machinery_rental_cost*(hectares_annuals+hectares_perennials), #rental cost  in EUR/ha/year
+                                  var_CV = var_CV,
+                                  n = operating_years)
+  
+  
+  machinery_maintenance_costs <- vv(var_mean = machinery_maintenance_cost,  
+                                    var_CV = var_CV, 
+                                    n = operating_years)
+  fuel_costs <- vv(var_mean = fuel_cost*(hectares_annuals+hectares_perennials), # fuel cost per ha/year
+                   var_CV = var_CV, 
+                   n = operating_years)
+  labour_costs <- vv(var_mean = labour_cost*labour_hours*(hectares_annuals+hectares_perennials), # (EUR/hour)*(hours/ha)*total ha
+                      var_CV = var_CV, 
+                      n = operating_years)
+  # Adjusted labor costs in case farmer gets sick or other personal problems
+  adjusted_labour_costs <- chance_event(chance = vv(var_mean = p_personal_risk,
+                                                    var_CV = var_CV,
+                                                    n = operating_years,
+                                                    absolute_trend = 0.003), # increasing over time due to higher chance of becoming sick with age 
+                                      value_if = labour_costs * vv(p_change_personal_risk, var_CV, 1),
+                                      value_if_not = labour_costs,
+                                      n = operating_years)
+  
+  seed_costs_wheat <- vv(var_mean = seed_cost_wheat * hectares_annuals, # EUR/ha 
+                      var_CV = var_CV, 
+                      n = operating_years)
+  seed_costs_soy_bean <- vv(var_mean = seed_cost_soy_bean*hectares_annuals, # EUR/ha 
+                            var_CV = var_CV, 
+                            n = operating_years)
+  seed_costs_maize <- vv(var_mean = seed_cost_maize*hectares_annuals, # EUR/ha 
+                         var_CV = var_CV, 
+                         n = operating_years)
+  seed_costs_landsberger_gemenge <- vv(var_mean = seed_cost_langsberger_gemenge*hectares_annuals, # EUR/ha 
+                                       var_CV = var_CV, 
+                                       n = operating_years)
+  fertilizer_costs <- vv(var_mean = fertilizer_cost*(hectares_annuals+hectares_perennials),  #EUR/ha
+                         var_CV = var_CV, 
+                         n = operating_years)
+  crop_protection_costs <- vv(var_mean = crop_protection_cost * (hectares_annuals + hectares_perennials), # EUR/ha 
+                         var_CV = var_CV, 
+                         n = operating_years)
+  distribution_costs <- vv(var_mean = distribution_cost * (hectares_annuals+hectares_perennials), # EUR/ha 
+                            var_CV = var_CV, 
+                            n = operating_years)
+
+  # calculate total operating costs
+  operating_costs_total <- new_machinery_rental_cost+machinery_maintenance_costs+fuel_costs+adjusted_labour_costs+seed_costs_wheat+
+                           seed_costs_soy_bean+seed_costs_maize+seed_costs_landsberger_gemenge+
+                           fertilizer_costs+crop_protection_costs+distribution_cost
+ 
+  
+  ## Calculate profits for AF system
+  profit_AF_system <- chance_event(
+    chance = vv(
+      var_mean = p_market_price_risk,
+      var_CV = var_CV,
+      n = operating_years,
+      absolute_trend = 0.004 # increasing risk due to highly uncertain development of markets
+    ),
+    value_if = (profit_annuals + profit_perennials + non_yield_profits - invest_costs_total - operating_costs_total) * 
+      vv(
+        var_mean = p_change_market_risk,
+        var_CV = var_CV,
+        n = operating_years
+      ),
+    value_if_not = profit_annuals + profit_perennials + non_yield_profits - invest_costs_total - operating_costs_total,
+    n = operating_years
+  )
+  
+  
+  
+  ## Baseline comparisson 
+  
+  # Calculate profits from annuals in the conventional system for baseline comparisson 
+  # Initialize vector to store yields for each year
+  # total_hectares_baseline = owned land + leased land 
+
+  profits_baseline <- numeric(operating_years)
+  
+  
+  # Initial risk
+  initial_risk <- p_production_risk
+  
+  # Generate yields and prices for each year based on Rheinische crop rotation
+  for (year in 1:operating_years) {
+    cycle_year <- (year - 1) %% 3 + 1
+    # Calculate the cumulative risk for the current year
+    cumulative_risk <- initial_risk + (year - 1) * 0.005
+    
+    if (cycle_year == 1) {
+      total_yield_wheat_baseline <- vv(yield_wheat_baseline * total_hectares_baseline, var_CV, 1)
+      adjusted_wheat_yield_baseline <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_wheat_baseline * vv(p_change_production_risk_baseline, var_CV, 1),
+        value_if_not = total_yield_wheat_baseline,
+        n = 1
+      )
+      price_wheat <- vv(price_wheat_baseline, var_CV, 1)
+      profits_baseline[year] <- adjusted_wheat_yield_baseline * price_wheat
+    } else if (cycle_year == 2) {
+      total_yield_rape_seed_baseline <- vv(yield_rape_seed_baseline * total_hectares_baseline, var_CV, 1)
+      adjusted_yield_rape_seed_baseline <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_rape_seed_baseline * vv(p_change_production_risk_baseline, var_CV, 1),
+        value_if_not = total_yield_rape_seed_baseline,
+        n = 1
+      )
+      price_rape_seed <- vv(price_rape_seed_baseline, var_CV, 1)
+      profits_baseline[year] <- adjusted_yield_rape_seed_baseline * price_rape_seed
+    } else if (cycle_year == 3) {
+      total_yield_sugar_beet_baseline <- vv(yield_sugar_beet_baseline * total_hectares_baseline, var_CV, 1)
+      adjusted_yield_sugar_beet_baseline <- chance_event(
+        chance = vv(var_mean = cumulative_risk, var_CV = var_CV, n = 1),
+        value_if = total_yield_sugar_beet_baseline * vv(p_change_production_risk_baseline, var_CV, 1),
+        value_if_not = total_yield_sugar_beet_baseline,
+        n = 1
+      )
+      price_sugar_beet <- vv(price_sugar_beet_baseline, var_CV, 1)
+      profits_baseline[year] <- adjusted_yield_sugar_beet_baseline * price_sugar_beet
+    }
+  }
+  
+  
+  ## Calculate costs for conventional system
+  
+  machinery_maintenance_costs_baseline <- vv(var_mean = machinery_maintenance_baseline, 
+                                             var_CV = var_CV, 
+                                             n = operating_years)
+  
+  fuel_costs_baseline <- vv(var_mean = fuel_cost_baseline*total_hectares_baseline, 
+                            var_CV = var_CV, 
+                            n = operating_years)
+  
+  labour_costs_baseline <- vv(var_mean = labour_cost_baseline*labour_hours_baseline*total_hectares_baseline, # EUR/hour*hour/ha * ha
+                              var_CV = var_CV, 
+                              n = operating_years)
+  adjusted_labour_costs_baseline <- chance_event(chance = vv(var_mean = p_personal_risk,
+                                                             var_CV = var_CV,
+                                                             n = operating_years,
+                                                             absolute_trend = 0.003), # increasing over time due to higher chance of becoming sick with age ,
+                                        value_if = labour_costs_baseline * vv(p_change_personal_risk, var_CV, 1),
+                                        value_if_not = labour_costs_baseline,
+                                        n = operating_years)
+  
+  seed_costs_wheat_baseline <- vv(var_mean = seed_cost_wheat_baseline*total_hectares_baseline,
+                                  var_CV = var_CV,
+                                  n = operating_years)
+  seed_costs_rape_seed_baseline <-vv(var_mean = seed_cost_rape_seed_baseline*total_hectares_baseline,
+                                     var_CV = var_CV,
+                                     n = operating_years)
+  seed_costs_sugar_beet_baseline <- vv(var_mean = seed_cost_wheat_baseline*total_hectares_baseline,
+                                       var_CV = var_CV,
+                                       n = operating_years)
+  
+  fertilizers_costs_baseline <- vv(var_mean = fertilizer_cost_baseline*total_hectares_baseline,
+                                   var_CV = var_CV,
+                                   n = operating_years)
+  crop_protection_costs_baseline <- vv(var_mean = crop_protection_cost_baseline*total_hectares_baseline,
+                                        var_CV = var_CV,
+                                        n = operating_years)
+  leasing_costs_baseline <- vv(var_mean = leasing_cost_baseline*leased_hectares_baseline,
+                              var_CV = var_CV,
+                              n = operating_years,
+                              absolute_trend = 0.002)
+                              
+  
+  #Calculate total costs baseline
+  costs_baseline <- (machinery_maintenance_costs_baseline+fuel_costs_baseline+adjusted_labour_costs_baseline+seed_costs_wheat_baseline+
+                       seed_costs_rape_seed_baseline+ seed_costs_sugar_beet_baseline+fertilizers_costs_baseline+crop_protection_costs_baseline+leasing_costs_baseline)
+
+ 
+  
+  # calculate profit with the net with included market risks
+  profit_baseline_comparisson <- chance_event(chance = vv(var_mean = p_market_price_risk,
+                                                          var_CV = var_CV,
+                                                          n = operating_years,
+                                                          absolute_trend = 0.004), # increasing risk due to highly uncertain development of markets 
+                                              value_if =  (profits_baseline-costs_baseline)*
+                                                vv(var_mean = p_change_market_risk ,
+                                                   var_CV = var_CV,
+                                                   n = operating_years),
+                                              value_if_not = (profits_baseline-costs_baseline),
+                                              n = operating_years)
+  
+  # use 'discount' to calculate net present value 
+  # 'discount_rate' is expressed in percent
+  NPV_AF_system <- discount(profit_AF_system, discount_rate = discount_rate, calculate_NPV = TRUE)
+  NPV_baseline_comparisson <- discount(profit_baseline_comparisson, discount_rate = discount_rate, calculate_NPV = TRUE)
+  
+  
+  # calculate the overall NPV of the decision (do - don't do)
+  NPV_decision <- NPV_AF_system - NPV_baseline_comparisson
+  
+  # Cashflow
+
+  AF_cash_flow <- vv(profit_AF_system, n = operating_years, var_CV = var_CV)
+  baseline_cash_flow <-vv(profit_baseline_comparisson, n = operating_years, var_CV = var_CV)
+  
+  
+  
+  return(list(NPV_baseline_comparisson =  NPV_baseline_comparisson,
+              NPV_AF_system =  NPV_AF_system, 
+              NPV_decision = NPV_decision,
+              AF_cash_flow = AF_cash_flow,
+              baseline_cash_flow = baseline_cash_flow
+            
+              ))
+
+}
+```
+## 3.1 Monte Carlo Simulation
+
+The `mcSimulation` function performs a Monte Carlo Simulation on the previously described `cost_benefits_function`. In this process, a large number of random input values are generated based on the given estimates. These inputs are then passed through the mathematical model, which calculates the outputs. This creates a distribution of possible outcomes, giving us a range of potential results. To ensure reliable results, the `numberOfModelRuns` parameter is set to 1000.
+
+```{r echo=TRUE}
+# Run the Monte Carlo simulation using the model function
+model_mc_simulation <- mcSimulation(
+  estimate = as.estimate(cost_benefits),       
+  model_function = cost_benefits_function,     
+  numberOfModelRuns = 1000,                    
+  functionSyntax = "plainNames"                
+)
+```
+
+## 3.2 Results
+
+### 3.2.1 Distribution Plots
+
+A distribution plot was created with `plot_distribution` function and the atribute `method = 'smooth_simple_overlay'` in order to visualize the distribution ranges of both systems. The distribution plot shows that the AF system peaks around 500,000 Euro , while the conventional system peaks slightly higher at 600,000. Both distributions are bell-shaped and overlap significantly, indicating similar probabilities for a range of outcomes. This suggests that while each system has distinct performance probabilities, the AF system is more likely to generate higher returns.
+
+```{r echo=TRUE}
+#plotting results
+plot_distributions(mcSimulation_object = model_mc_simulation, 
+                   vars = c("NPV_baseline_comparisson", "NPV_AF_system"),
+                   method = 'smooth_simple_overlay', 
+                    x_axis_name = "Outcome distribution (NPV in Euro)",
+                   base_size = 7)
+```
+
+A combined density and boxplot distribution of the decision AF system vs conventional system was created using the `plot_distributions` function with the attribute `method = 'boxplot_density'` to visualize the density and statistical summary of the outcomes. The probability density function of net decision outcomes, expressed in NP) in Euros, shows a normal distribution, indicating most outcomes cluster around the mean. The graph indicates that, when comparing the AF system to the conventional systems, the AF system produces a higher NPV.
+
+
+
+```{r echo=TRUE, warning=FALSE}
+plot_distributions(mcSimulation_object = model_mc_simulation, 
+                   vars = c("NPV_decision"),
+                   method = 'boxplot_density', 
+                   y_axis_name = "Probability",
+                   x_axis_name = "Net decisions outcome (NPV in Euro)",
+                   base_size = 7)
+```
+
+
+### 3.2.2 Cashflow Plot 
+
+The cash flow for both systems was visualized with the `plot_cashflow`function.The graph shows that the AF system performs better than conventional systems in terms of annual cashflow over 40 years. The AF systems shows a negative cash flow within the first years due to initial investments  but ultimately reaches higher peaks, while the conventional system stays more stable but lower. This means the AF system is performing better in terms of financial feasibility. 
+
+
+```{r echo=TRUE}
+plot_cashflow(mcSimulation_object = model_mc_simulation, 
+              cashflow_var_name = c("AF_cash_flow", "baseline_cash_flow"),
+              x_axis_name = "Operating Years",
+              y_axis_name = "Annual cashflow in Euro",
+              color_25_75 = "blue1", color_5_95 = "darkblue",
+              color_median = "red", 
+              facet_labels = c("AF System", "Conventional system"))
+```
+
+### 3.2.3 Compound Figure 
+
+The compound figure presents an analysis using three types of plots (Distribution, Cashflow and Variable Importance in Projection Plot) generated from 1000 `model_runs` with the `compound_figure` function.  The Variable Importance in Projection (VIP) bar chart measures each variable's influence on projection accuracy, with positive impacts extending rightwards and negative impacts leftwards. Notably, the 'Discount rate' has substantial negative importance, while the 'Market price of apples' has significant positive importance within these projections. 
+
+```{r echo=TRUE, warning=FALSE, message=FALSE}
+compound_figure(mcSimulation_object = model_mc_simulation, 
+                input_table = cost_benefits,
+                decision_var_name = "NPV_decision",
+                cashflow_var_name = "AF_cash_flow",
+                model_runs = 1000, 
+                distribution_method = 'smooth_simple_overlay')
+```
+
+
+# 4. Evaluation and Interpretation
+
+## 4.1 Inference of Results
+
+Given the results, and with the set of input values provided with it, the transformation of the family farm into an silvoarable agroforestry system by the young farmer is the preferable option in terms of financial gain.
+ 
+## 4.1 Limitations of my work
+
+This model represents a hypothetical scenario developed as part of the Decision Analysis course. Given its specificity, it is uncertain how many farmers will face this exact decision or a similar one in real-world contexts. Additionally, the model was conceptualized, computed, and revised within a limited time frame, which has affected both the overall structure and the depth of the individual variables. The inputs for the variables were not thoroughly researched, leading to potential inaccuracies in the data used. Furthermore the model did not account for various aspects such as several financial considerations, arable interactions during the growing season as well as how the land changes over time depending on the system. 
+
+## 3.2 Relevance of my work 
